@@ -1,0 +1,2649 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>이모티콘 검색기</title>
+    <style>html {
+  --light:RGB(255,255,255);
+  --dark:RGB(55,59,62);
+  --gray:RGB(110,120,130);
+  --border-width:2px;
+  --border:var(--border-width) solid var(--gray);
+
+  --width:100px;
+  --height:100px;
+}
+html { background:var(--dark); }
+ul { list-style:none; margin:0; padding:0; }
+li { display:inline-block; }
+
+body {
+  position:absolute; top:0; bottom:0; left:0; right:0; margin:0;
+  display:flex; flex-direction:column;
+}
+
+header {
+  flex-shrink:0;
+  display:flex; flex-wrap:wrap; justify-content:center;
+  margin:0 1rem 1rem;
+}
+.search { width:40%; padding:0 5%; }
+.search .title { color:var(--light); text-align:center; font:inherit; }
+.search .bar {
+  display:flex; position:relative;
+  border:var(--border);
+}
+.search .bar>* { background:var(--light); }
+.search .bar .prefix {
+  display:inline-block; text-align:center;
+  width:1rem; height:1rem; line-height:1rem; padding:.5rem;
+  border-right:var(--border);
+}
+.search .bar input {
+  border:none; font:inherit; vertical-align:top;
+  min-width:0; height:1rem; margin:0; padding:.5rem;
+  flex-grow:1;
+}
+.search .bar input[disabled] { background:var(--gray); }
+.search .bar .select {
+  position:absolute; z-index:5; display:flex; flex-direction:column;
+  left:calc(var(--border-width) / -2); right:calc(var(--border-width) / -2);
+  top:calc(100% + 1rem); outline-offset:calc(var(--border-width) / -2);
+  background:var(--gray); outline:var(--border);
+  max-height:60vh; overflow-y:auto;
+}
+.search .bar .select .option {
+  display:block; background:var(--light);
+  padding:.4rem; margin:calc(var(--border-width) / 2);
+}
+
+article { overflow-y:auto; }
+#orimgs { text-align:center; margin:0 1rem 1rem; }
+.orimg {
+  width:var(--width); height:var(--height); line-height:var(--height);
+  text-align:center; margin:var(--border-width);
+}
+.orimg img {
+  max-width:var(--width); max-height:var(--height);
+  vertical-align:middle;
+}
+
+.hidden { display:none !important; }
+.tooltip {
+  background:var(--gray); color:var(--light);
+  padding:.5rem 1rem; line-height:2rem; white-space:pre-line;
+  position:fixed; z-index:10; top:15%; left:50%; transform:translateX(-50%);
+}
+.orimg:not(:hover) .tooltip { display:none; }
+
+.bubble {
+  background:var(--gray); color:var(--light);
+  padding:.7rem 1.5rem; white-space:pre-line;
+  position:fixed; z-index:100; top:10%; left:50%; transform:translateX(-50%);
+}
+
+footer { color:var(--light); text-align:center; margin:2rem 0 1rem; }
+footer a { color:var(--gray); text-decoration:none; }
+
+@media (max-width:480px) { .serach { width:100%; } }</style>
+  </head>
+
+  <body>
+    <header>
+      <section class="search" id="search-name">
+        <h2 class="title">이름 검색</h2>
+        <div class="bar">
+          <span class="prefix">~</span>
+          <input disabled="disabled" type="text">
+          <ul id="names" class="select hidden">
+            <li class="name option">4딸라</li>
+          
+            <li class="name option">amd</li>
+          
+            <li class="name option">AMD</li>
+          
+            <li class="name option">docomo</li>
+          
+            <li class="name option">DOCOMO</li>
+          
+            <li class="name option">intel</li>
+          
+            <li class="name option">INTEL</li>
+          
+            <li class="name option">lg</li>
+          
+            <li class="name option">LG</li>
+          
+            <li class="name option">ryzen</li>
+          
+            <li class="name option">RYZEN</li>
+          
+            <li class="name option">vv</li>
+          
+            <li class="name option">VV</li>
+          
+            <li class="name option">x</li>
+          
+            <li class="name option">X</li>
+          
+            <li class="name option">가능</li>
+          
+            <li class="name option">갑분싸</li>
+          
+            <li class="name option">개구리갑분싸</li>
+          
+            <li class="name option">개구리빵야1</li>
+          
+            <li class="name option">개구리빵야2</li>
+          
+            <li class="name option">개구리화남</li>
+          
+            <li class="name option">개노잼</li>
+          
+            <li class="name option">개소리</li>
+          
+            <li class="name option">개소리집어쳐</li>
+          
+            <li class="name option">갸아악</li>
+          
+            <li class="name option">갸아악1</li>
+          
+            <li class="name option">갸아악2</li>
+          
+            <li class="name option">게이븐</li>
+          
+            <li class="name option">결혼반지</li>
+          
+            <li class="name option">고올든무말모</li>
+          
+            <li class="name option">고퀄흠</li>
+          
+            <li class="name option">골든무말모</li>
+          
+            <li class="name option">골든싸닉</li>
+          
+            <li class="name option">공중제비</li>
+          
+            <li class="name option">공포</li>
+          
+            <li class="name option">구독냥이</li>
+          
+            <li class="name option">구레이</li>
+          
+            <li class="name option">구레이다옹</li>
+          
+            <li class="name option">구와아악</li>
+          
+            <li class="name option">굳건따봉</li>
+          
+            <li class="name option">굳건이</li>
+          
+            <li class="name option">굳건참피</li>
+          
+            <li class="name option">굳건트레일</li>
+          
+            <li class="name option">그안키</li>
+          
+            <li class="name option">김치워리어</li>
+          
+            <li class="name option">꼬우면</li>
+          
+            <li class="name option">꾸동냔니</li>
+          
+            <li class="name option">꾸동냥이</li>
+          
+            <li class="name option">나클즈</li>
+          
+            <li class="name option">네다틀</li>
+          
+            <li class="name option">네말맞</li>
+          
+            <li class="name option">네말이맞아</li>
+          
+            <li class="name option">네온</li>
+          
+            <li class="name option">네온다옹</li>
+          
+            <li class="name option">노링메타</li>
+          
+            <li class="name option">노예일해</li>
+          
+            <li class="name option">녹색옷</li>
+          
+            <li class="name option">눈물겐지</li>
+          
+            <li class="name option">눈물너클즈</li>
+          
+            <li class="name option">눈물디바</li>
+          
+            <li class="name option">눈물라인</li>
+          
+            <li class="name option">눈물라인하르트</li>
+          
+            <li class="name option">눈물로드</li>
+          
+            <li class="name option">눈물로드호그</li>
+          
+            <li class="name option">눈물루시우</li>
+          
+            <li class="name option">눈물리퍼</li>
+          
+            <li class="name option">눈물맥크리</li>
+          
+            <li class="name option">눈물메르시</li>
+          
+            <li class="name option">눈물메이</li>
+          
+            <li class="name option">눈물바스</li>
+          
+            <li class="name option">눈물바스티온</li>
+          
+            <li class="name option">눈물소닉</li>
+          
+            <li class="name option">눈물솔져</li>
+          
+            <li class="name option">눈물시메</li>
+          
+            <li class="name option">눈물시메트라</li>
+          
+            <li class="name option">눈물에이미</li>
+          
+            <li class="name option">눈물여까</li>
+          
+            <li class="name option">눈물역가</li>
+          
+            <li class="name option">눈물위도우</li>
+          
+            <li class="name option">눈물위도우메이커</li>
+          
+            <li class="name option">눈물윈스턴</li>
+          
+            <li class="name option">눈물자리야</li>
+          
+            <li class="name option">눈물정크랫</li>
+          
+            <li class="name option">눈물젠야타</li>
+          
+            <li class="name option">눈물테일즈</li>
+          
+            <li class="name option">눈물토르</li>
+          
+            <li class="name option">눈물토르비욘</li>
+          
+            <li class="name option">눈물트레</li>
+          
+            <li class="name option">눈물트레이서</li>
+          
+            <li class="name option">눈물파라</li>
+          
+            <li class="name option">눈물한조</li>
+          
+            <li class="name option">눈물희키</li>
+          
+            <li class="name option">다시도전</li>
+          
+            <li class="name option">다웨</li>
+          
+            <li class="name option">대부분</li>
+          
+            <li class="name option">댕댕콘</li>
+          
+            <li class="name option">도코모</li>
+          
+            <li class="name option">따일즈</li>
+          
+            <li class="name option">라이젠</li>
+          
+            <li class="name option">레바띠용</li>
+          
+            <li class="name option">레바와아</li>
+          
+            <li class="name option">레바탕탕</li>
+          
+            <li class="name option">레바팝콘</li>
+          
+            <li class="name option">레바팝콘1</li>
+          
+            <li class="name option">레바팝콘2</li>
+          
+            <li class="name option">리얼싸닉</li>
+          
+            <li class="name option">리전락</li>
+          
+            <li class="name option">리틀성기</li>
+          
+            <li class="name option">링없찐</li>
+          
+            <li class="name option">링크기도</li>
+          
+            <li class="name option">링크던져</li>
+          
+            <li class="name option">링크득템</li>
+          
+            <li class="name option">링크따봉</li>
+          
+            <li class="name option">링크여기야</li>
+          
+            <li class="name option">링크응원</li>
+          
+            <li class="name option">링크절규</li>
+          
+            <li class="name option">링크티배깅</li>
+          
+            <li class="name option">마치</li>
+          
+            <li class="name option">망겜이다</li>
+          
+            <li class="name option">매우정상</li>
+          
+            <li class="name option">멀미</li>
+          
+            <li class="name option">멀미1</li>
+          
+            <li class="name option">멀미2</li>
+          
+            <li class="name option">멀미3</li>
+          
+            <li class="name option">무궁화</li>
+          
+            <li class="name option">무궁화1</li>
+          
+            <li class="name option">무궁화2</li>
+          
+            <li class="name option">무지개깃발</li>
+          
+            <li class="name option">무표정</li>
+          
+            <li class="name option">문풍당당</li>
+          
+            <li class="name option">문풍당당1</li>
+          
+            <li class="name option">문풍당당2</li>
+          
+            <li class="name option">문풍당당3</li>
+          
+            <li class="name option">발퀄흠</li>
+          
+            <li class="name option">버그</li>
+          
+            <li class="name option">버퍼링</li>
+          
+            <li class="name option">범죄</li>
+          
+            <li class="name option">복창펑</li>
+          
+            <li class="name option">복창펑1</li>
+          
+            <li class="name option">복창펑2</li>
+          
+            <li class="name option">볼트가정사</li>
+          
+            <li class="name option">볼트결혼</li>
+          
+            <li class="name option">볼트고인</li>
+          
+            <li class="name option">볼트공중</li>
+          
+            <li class="name option">볼트공중제비</li>
+          
+            <li class="name option">볼트관전</li>
+          
+            <li class="name option">볼트구토</li>
+          
+            <li class="name option">볼트군인</li>
+          
+            <li class="name option">볼트근엄</li>
+          
+            <li class="name option">볼트근육</li>
+          
+            <li class="name option">볼트기계</li>
+          
+            <li class="name option">볼트꺼져</li>
+          
+            <li class="name option">볼트나무</li>
+          
+            <li class="name option">볼트넷여친</li>
+          
+            <li class="name option">볼트넷친구</li>
+          
+            <li class="name option">볼트눈물</li>
+          
+            <li class="name option">볼트닌자</li>
+          
+            <li class="name option">볼트닥쳐</li>
+          
+            <li class="name option">볼트답답</li>
+          
+            <li class="name option">볼트대게</li>
+          
+            <li class="name option">볼트대대리</li>
+          
+            <li class="name option">볼트대머리</li>
+          
+            <li class="name option">볼트댕댕</li>
+          
+            <li class="name option">볼트동정</li>
+          
+            <li class="name option">볼트등골</li>
+          
+            <li class="name option">볼트딴딴</li>
+          
+            <li class="name option">볼트딸딸</li>
+          
+            <li class="name option">볼트떠남</li>
+          
+            <li class="name option">볼트띠용</li>
+          
+            <li class="name option">볼트라이플</li>
+          
+            <li class="name option">볼트루저</li>
+          
+            <li class="name option">볼트마약</li>
+          
+            <li class="name option">볼트망치</li>
+          
+            <li class="name option">볼트머대리</li>
+          
+            <li class="name option">볼트머머리</li>
+          
+            <li class="name option">볼트명상</li>
+          
+            <li class="name option">볼트병신</li>
+          
+            <li class="name option">볼트부활</li>
+          
+            <li class="name option">볼트비밀친구</li>
+          
+            <li class="name option">볼트빠따</li>
+          
+            <li class="name option">볼트빼액</li>
+          
+            <li class="name option">볼트수류탄</li>
+          
+            <li class="name option">볼트수면</li>
+          
+            <li class="name option">볼트신문</li>
+          
+            <li class="name option">볼트심리</li>
+          
+            <li class="name option">볼트아킴보</li>
+          
+            <li class="name option">볼트안마</li>
+          
+            <li class="name option">볼트엄격</li>
+          
+            <li class="name option">볼트에쎔</li>
+          
+            <li class="name option">볼트연설</li>
+          
+            <li class="name option">볼트연주</li>
+          
+            <li class="name option">볼트예수</li>
+          
+            <li class="name option">볼트우승</li>
+          
+            <li class="name option">볼트음주</li>
+          
+            <li class="name option">볼트인육</li>
+          
+            <li class="name option">볼트자본</li>
+          
+            <li class="name option">볼트자살</li>
+          
+            <li class="name option">볼트장전</li>
+          
+            <li class="name option">볼트저격</li>
+          
+            <li class="name option">볼트전기톱</li>
+          
+            <li class="name option">볼트절망</li>
+          
+            <li class="name option">볼트주먹</li>
+          
+            <li class="name option">볼트주사</li>
+          
+            <li class="name option">볼트진지</li>
+          
+            <li class="name option">볼트처형</li>
+          
+            <li class="name option">볼트침대</li>
+          
+            <li class="name option">볼트컴온</li>
+          
+            <li class="name option">볼트토끼</li>
+          
+            <li class="name option">볼트통수</li>
+          
+            <li class="name option">볼트투시</li>
+          
+            <li class="name option">볼트투창</li>
+          
+            <li class="name option">볼트파오후</li>
+          
+            <li class="name option">볼트펄럭</li>
+          
+            <li class="name option">볼트포기</li>
+          
+            <li class="name option">볼트핫산</li>
+          
+            <li class="name option">볼트화염병</li>
+          
+            <li class="name option">볼트활활</li>
+          
+            <li class="name option">불편</li>
+          
+            <li class="name option">불행</li>
+          
+            <li class="name option">불행1</li>
+          
+            <li class="name option">불행2</li>
+          
+            <li class="name option">붕쯔</li>
+          
+            <li class="name option">붕쯔붕쯔</li>
+          
+            <li class="name option">비선실</li>
+          
+            <li class="name option">빠요엔</li>
+          
+            <li class="name option">빠요엔1</li>
+          
+            <li class="name option">빠요엔2</li>
+          
+            <li class="name option">빠요엔3</li>
+          
+            <li class="name option">빨갱이</li>
+          
+            <li class="name option">사망</li>
+          
+            <li class="name option">사이버망령</li>
+          
+            <li class="name option">사행성</li>
+          
+            <li class="name option">상담필요</li>
+          
+            <li class="name option">서순</li>
+          
+            <li class="name option">선정성</li>
+          
+            <li class="name option">설명들갑</li>
+          
+            <li class="name option">세종대왕</li>
+          
+            <li class="name option">세종분노</li>
+          
+            <li class="name option">소닉붐</li>
+          
+            <li class="name option">수직낙하</li>
+          
+            <li class="name option">순서</li>
+          
+            <li class="name option">스웩흠</li>
+          
+            <li class="name option">싸닉</li>
+          
+            <li class="name option">아아</li>
+          
+            <li class="name option">아흑</li>
+          
+            <li class="name option">안키우는데요</li>
+          
+            <li class="name option">암드</li>
+          
+            <li class="name option">약물</li>
+          
+            <li class="name option">어케이겼노</li>
+          
+            <li class="name option">어케이김</li>
+          
+            <li class="name option">어케함</li>
+          
+            <li class="name option">어케했노</li>
+          
+            <li class="name option">에라모겠</li>
+          
+            <li class="name option">에라몰겠</li>
+          
+            <li class="name option">엘쥐</li>
+          
+            <li class="name option">엘지</li>
+          
+            <li class="name option">여까눈물</li>
+          
+            <li class="name option">여까박수</li>
+          
+            <li class="name option">여까복창펑</li>
+          
+            <li class="name option">여까평가</li>
+          
+            <li class="name option">여까흠</li>
+          
+            <li class="name option">역가눈물</li>
+          
+            <li class="name option">역가박수</li>
+          
+            <li class="name option">역가복창펑</li>
+          
+            <li class="name option">역가평가</li>
+          
+            <li class="name option">역가흠</li>
+          
+            <li class="name option">역자평가</li>
+          
+            <li class="name option">오케이땡큐</li>
+          
+            <li class="name option">왜곡흠</li>
+          
+            <li class="name option">외곡소닉</li>
+          
+            <li class="name option">외곡테일즈</li>
+          
+            <li class="name option">욕설</li>
+          
+            <li class="name option">우리가남이가</li>
+          
+            <li class="name option">우리가남이가1</li>
+          
+            <li class="name option">우리가남이가2</li>
+          
+            <li class="name option">우리역박수</li>
+          
+            <li class="name option">우리핵드럼</li>
+          
+            <li class="name option">우리핵박수</li>
+          
+            <li class="name option">우리핵박수1</li>
+          
+            <li class="name option">우리핵박수2</li>
+          
+            <li class="name option">우리핵박수3</li>
+          
+            <li class="name option">우리핵빵야</li>
+          
+            <li class="name option">우리핵쌍안경</li>
+          
+            <li class="name option">우리핵아닌데</li>
+          
+            <li class="name option">우리핵안녕</li>
+          
+            <li class="name option">우리핵투정</li>
+          
+            <li class="name option">유다이</li>
+          
+            <li class="name option">유다이1</li>
+          
+            <li class="name option">유다이2</li>
+          
+            <li class="name option">유다이3</li>
+          
+            <li class="name option">유다희</li>
+          
+            <li class="name option">유다희1</li>
+          
+            <li class="name option">유다희2</li>
+          
+            <li class="name option">유다희3</li>
+          
+            <li class="name option">유비</li>
+          
+            <li class="name option">윾비</li>
+          
+            <li class="name option">의도된</li>
+          
+            <li class="name option">이제좀볼만</li>
+          
+            <li class="name option">이지붐</li>
+          
+            <li class="name option">인텔</li>
+          
+            <li class="name option">일해</li>
+          
+            <li class="name option">잔짜잔</li>
+          
+            <li class="name option">잔짜잔1</li>
+          
+            <li class="name option">잔짜잔2</li>
+          
+            <li class="name option">정말멋있다</li>
+          
+            <li class="name option">젤다기도</li>
+          
+            <li class="name option">젤다던져</li>
+          
+            <li class="name option">젤다득템</li>
+          
+            <li class="name option">젤다따봉</li>
+          
+            <li class="name option">젤다여기야</li>
+          
+            <li class="name option">젤다응원</li>
+          
+            <li class="name option">젤다절규</li>
+          
+            <li class="name option">젤다티배깅</li>
+          
+            <li class="name option">좋겠다</li>
+          
+            <li class="name option">죽창</li>
+          
+            <li class="name option">짜잔</li>
+          
+            <li class="name option">짜잔1</li>
+          
+            <li class="name option">짜잔2</li>
+          
+            <li class="name option">짱이야</li>
+          
+            <li class="name option">찢장기</li>
+          
+            <li class="name option">찢조국</li>
+          
+            <li class="name option">청불</li>
+          
+            <li class="name option">초록옷</li>
+          
+            <li class="name option">촉수가게</li>
+          
+            <li class="name option">축하해</li>
+          
+            <li class="name option">칠레감동</li>
+          
+            <li class="name option">칠레감탄</li>
+          
+            <li class="name option">칠레감탄1</li>
+          
+            <li class="name option">칠레감탄2</li>
+          
+            <li class="name option">칠레감탄3</li>
+          
+            <li class="name option">칠레감탄4</li>
+          
+            <li class="name option">칠레스고이</li>
+          
+            <li class="name option">칠레점프</li>
+          
+            <li class="name option">코지마</li>
+          
+            <li class="name option">쿠이</li>
+          
+            <li class="name option">쿠이쿠이</li>
+          
+            <li class="name option">킹조국</li>
+          
+            <li class="name option">태극기</li>
+          
+            <li class="name option">토끼공듀</li>
+          
+            <li class="name option">토끼공듀1</li>
+          
+            <li class="name option">토끼공듀2</li>
+          
+            <li class="name option">토드분노</li>
+          
+            <li class="name option">토드불만</li>
+          
+            <li class="name option">토드짜잔</li>
+          
+            <li class="name option">토드흐뭇</li>
+          
+            <li class="name option">토지마</li>
+          
+            <li class="name option">파산</li>
+          
+            <li class="name option">파킨</li>
+          
+            <li class="name option">팝콘레바</li>
+          
+            <li class="name option">팝콘레바1</li>
+          
+            <li class="name option">팝콘레바2</li>
+          
+            <li class="name option">퍄산</li>
+          
+            <li class="name option">펄럭</li>
+          
+            <li class="name option">펄럭1</li>
+          
+            <li class="name option">펄럭2</li>
+          
+            <li class="name option">편안</li>
+          
+            <li class="name option">폭력성</li>
+          
+            <li class="name option">폴짝</li>
+          
+            <li class="name option">피곤</li>
+          
+            <li class="name option">하트라인</li>
+          
+            <li class="name option">핫산발상</li>
+          
+            <li class="name option">핫산쾅</li>
+          
+            <li class="name option">핫산펑</li>
+          
+            <li class="name option">행복</li>
+          
+            <li class="name option">행복1</li>
+          
+            <li class="name option">행복2</li>
+          
+            <li class="name option">형이왜</li>
+          
+            <li class="name option">형이왜거기서</li>
+          
+            <li class="name option">호랑이</li>
+          
+            <li class="name option">호랑이1</li>
+          
+            <li class="name option">호랑이2</li>
+          
+            <li class="name option">호랑이3</li>
+          
+            <li class="name option">호랑이4</li>
+          
+            <li class="name option">혼란앵무</li>
+          
+            <li class="name option">혼란흠</li>
+          
+            <li class="name option">혼모노</li>
+          
+            <li class="name option">화남</li>
+          
+            <li class="name option">화장실</li>
+          
+            <li class="name option">회전흠</li>
+          
+            <li class="name option">회전흠1</li>
+          
+            <li class="name option">회전흠2</li>
+          
+            <li class="name option">회전흠3</li>
+          
+            <li class="name option">흠</li>
+          
+            <li class="name option">흠흠흠</li>
+          
+            <li class="name option">희키눈물</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="search" id="search-tag">
+        <h2 class="title">태그 검색</h2>
+        <div class="bar">
+          <input disabled="disabled" id="input-tag" type="text">
+          <ul id="tags" class="select hidden">
+            <li class="tag option">BB콘</li>
+          
+            <li class="tag option">개구리</li>
+          
+            <li class="tag option">게비스콘</li>
+          
+            <li class="tag option">겐고로</li>
+          
+            <li class="tag option">고인물</li>
+          
+            <li class="tag option">국기</li>
+          
+            <li class="tag option">국뽕</li>
+          
+            <li class="tag option">굳건이</li>
+          
+            <li class="tag option">김두한</li>
+          
+            <li class="tag option">눈물콘</li>
+          
+            <li class="tag option">레바콘</li>
+          
+            <li class="tag option">롤코타</li>
+          
+            <li class="tag option">볼트보이콘</li>
+          
+            <li class="tag option">붓싼문학</li>
+          
+            <li class="tag option">빠요엔</li>
+          
+            <li class="tag option">소닉</li>
+          
+            <li class="tag option">심의콘</li>
+          
+            <li class="tag option">여까티콘</li>
+          
+            <li class="tag option">우리핵콘</li>
+          
+            <li class="tag option">움짤</li>
+          
+            <li class="tag option">유다이</li>
+          
+            <li class="tag option">젤다</li>
+          
+            <li class="tag option">좋은말콘</li>
+          
+            <li class="tag option">주토피아</li>
+          
+            <li class="tag option">짜잔콘</li>
+          
+            <li class="tag option">참피</li>
+          
+            <li class="tag option">칠레콘</li>
+          
+            <li class="tag option">캐피탈리즘호</li>
+          
+            <li class="tag option">컴갤콘</li>
+          
+            <li class="tag option">코지마</li>
+          
+            <li class="tag option">토드콘</li>
+          
+            <li class="tag option">한자</li>
+          
+            <li class="tag option">핫산</li>
+          
+            <li class="tag option">흠</li>
+          
+            <li class="tag option">희키콘</li>
+          </ul>
+        </div>
+      </section>
+    </header>
+
+    <article>
+      <ul id="orimgs">
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="구독냥이" src="BBCC/images/역가꾸동냥이.png">
+          <div class="tooltip">구독냥이
+꾸동냥이
+꾸동냔니</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="역가평가" src="BBCC/images/역가평가.png">
+          <div class="tooltip">역가평가
+역자평가
+여까평가</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="우리역박수" src="BBCC/images/역가박수.png">
+          <div class="tooltip">우리역박수
+역가박수
+여까박수</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="눈물역가" src="BBCC/images/역가눈물.png">
+          <div class="tooltip">눈물역가
+역가눈물
+눈물여까
+여까눈물</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="복창펑" src="BBCC/images/역가복창펑1.png">
+          <div class="tooltip">복창펑
+복창펑1</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="역가복창펑" src="BBCC/images/역가복창펑2.png">
+          <div class="tooltip">역가복창펑
+여까복창펑
+복창펑2</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="역가흠" src="BBCC/images/역가흠.png">
+          <div class="tooltip">역가흠
+여까흠</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="서순" src="BBCC/images/역가서순.png">
+          <div class="tooltip">서순</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="순서" src="BBCC/images/역가순서.png">
+          <div class="tooltip">순서</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘">
+          <img data-keyword="아흑" src="BBCC/images/역헤가오.png">
+          <div class="tooltip">아흑
+vv
+VV</div>
+        </li>
+      
+        <li class="orimg" data-tags="여까티콘,움짤">
+          <img data-keyword="골든무말모" src="BBCC/images/역가골든무말모.gif">
+          <div class="tooltip">골든무말모
+고올든무말모</div>
+        </li>
+      
+        <li class="orimg" data-tags="주토피아,움짤">
+          <img data-keyword="호랑이1" src="BBCC/images/주톱호랑이1.gif">
+          <div class="tooltip">호랑이1
+호랑이</div>
+        </li>
+      
+        <li class="orimg" data-tags="주토피아,움짤">
+          <img data-keyword="호랑이2" src="BBCC/images/주톱호랑이2.gif">
+          <div class="tooltip">호랑이2</div>
+        </li>
+      
+        <li class="orimg" data-tags="주토피아,움짤">
+          <img data-keyword="호랑이3" src="BBCC/images/주톱호랑이3.gif">
+          <div class="tooltip">호랑이3</div>
+        </li>
+      
+        <li class="orimg" data-tags="주토피아,움짤">
+          <img data-keyword="호랑이4" src="BBCC/images/주톱호랑이4.gif">
+          <div class="tooltip">호랑이4</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉">
+          <img data-keyword="싸닉" src="BBCC/images/싸닉.png">
+          <div class="tooltip">싸닉</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉">
+          <img data-keyword="골든싸닉" src="BBCC/images/싸닉골든.png">
+          <div class="tooltip">골든싸닉</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉">
+          <img data-keyword="리얼싸닉" src="BBCC/images/싸닉리얼.png">
+          <div class="tooltip">리얼싸닉</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉">
+          <img data-keyword="따일즈" src="BBCC/images/싸닉따일즈.png">
+          <div class="tooltip">따일즈</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉">
+          <img data-keyword="나클즈" src="BBCC/images/싸닉나클즈.png">
+          <div class="tooltip">나클즈</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉,움짤">
+          <img data-keyword="다웨" src="BBCC/images/소닉다웨.gif">
+          <div class="tooltip">다웨</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉,움짤">
+          <img data-keyword="링없찐" src="BBCC/images/소닉링없찐.gif">
+          <div class="tooltip">링없찐
+노링메타</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉">
+          <img data-keyword="결혼반지" src="BBCC/images/소닉결혼반지.png">
+          <div class="tooltip">결혼반지</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉,움짤">
+          <img data-keyword="외곡테일즈" src="BBCC/images/소닉외곡테일즈.gif">
+          <div class="tooltip">외곡테일즈</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉,움짤">
+          <img data-keyword="외곡소닉" src="BBCC/images/소닉외곡.gif">
+          <div class="tooltip">외곡소닉</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉">
+          <img data-keyword="다시도전" src="BBCC/images/소닉다시도전.png">
+          <div class="tooltip">다시도전</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉,움짤">
+          <img data-keyword="X" src="BBCC/images/소닉더블부스터.gif">
+          <div class="tooltip">X
+x</div>
+        </li>
+      
+        <li class="orimg" data-tags="소닉,움짤">
+          <img data-keyword="소닉붐" src="images/dccon/소닉붐.gif">
+          <div class="tooltip">소닉붐</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="혼란앵무" src="BBCC/images/혼란앵무.gif">
+          <div class="tooltip">혼란앵무</div>
+        </li>
+      
+        <li class="orimg" data-tags="심의콘">
+          <img data-keyword="공포" src="BBCC/images/심의공포.png">
+          <div class="tooltip">공포</div>
+        </li>
+      
+        <li class="orimg" data-tags="심의콘">
+          <img data-keyword="범죄" src="BBCC/images/심의범죄.png">
+          <div class="tooltip">범죄</div>
+        </li>
+      
+        <li class="orimg" data-tags="심의콘">
+          <img data-keyword="사행성" src="BBCC/images/심의사행.png">
+          <div class="tooltip">사행성</div>
+        </li>
+      
+        <li class="orimg" data-tags="심의콘">
+          <img data-keyword="선정성" src="BBCC/images/심의선정.png">
+          <div class="tooltip">선정성</div>
+        </li>
+      
+        <li class="orimg" data-tags="심의콘">
+          <img data-keyword="약물" src="BBCC/images/심의약물.png">
+          <div class="tooltip">약물</div>
+        </li>
+      
+        <li class="orimg" data-tags="심의콘">
+          <img data-keyword="욕설" src="BBCC/images/심의언어.png">
+          <div class="tooltip">욕설</div>
+        </li>
+      
+        <li class="orimg" data-tags="심의콘">
+          <img data-keyword="청불" src="BBCC/images/심의성인.png">
+          <div class="tooltip">청불</div>
+        </li>
+      
+        <li class="orimg" data-tags="심의콘">
+          <img data-keyword="폭력성" src="BBCC/images/심의폭력.png">
+          <div class="tooltip">폭력성</div>
+        </li>
+      
+        <li class="orimg" data-tags="빠요엔">
+          <img data-keyword="빠요엔" src="BBCC/images/뿌요빠요엔1.png">
+          <div class="tooltip">빠요엔
+빠요엔1</div>
+        </li>
+      
+        <li class="orimg" data-tags="빠요엔">
+          <img data-keyword="빠요엔2" src="BBCC/images/뿌요빠요엔2.gif">
+          <div class="tooltip">빠요엔2</div>
+        </li>
+      
+        <li class="orimg" data-tags="빠요엔">
+          <img data-keyword="빠요엔3" src="BBCC/images/뿌요빠요엔3.gif">
+          <div class="tooltip">빠요엔3</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠">
+          <img data-keyword="흠" src="BBCC/images/흠.png">
+          <div class="tooltip">흠</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠">
+          <img data-keyword="스웩흠" src="BBCC/images/흠스웩.png">
+          <div class="tooltip">스웩흠</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠">
+          <img data-keyword="흠흠흠" src="BBCC/images/흠흠흠.png">
+          <div class="tooltip">흠흠흠</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠,움짤">
+          <img data-keyword="혼란흠" src="BBCC/images/흠란.gif">
+          <div class="tooltip">혼란흠</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠,움짤">
+          <img data-keyword="회전흠" src="BBCC/images/흠회전1.gif">
+          <div class="tooltip">회전흠
+회전흠1</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠,움짤">
+          <img data-keyword="회전흠2" src="BBCC/images/흠회전2.gif">
+          <div class="tooltip">회전흠2</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠,움짤">
+          <img data-keyword="회전흠3" src="BBCC/images/흠회전3.gif">
+          <div class="tooltip">회전흠3</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠">
+          <img data-keyword="발퀄흠" src="BBCC/images/흠발퀄.png">
+          <div class="tooltip">발퀄흠</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠">
+          <img data-keyword="고퀄흠" src="BBCC/images/흠고퀄.png">
+          <div class="tooltip">고퀄흠</div>
+        </li>
+      
+        <li class="orimg" data-tags="흠,움짤">
+          <img data-keyword="왜곡흠" src="BBCC/images/흠왜곡.gif">
+          <div class="tooltip">왜곡흠</div>
+        </li>
+      
+        <li class="orimg" data-tags="칠레콘,움짤">
+          <img data-keyword="칠레감동" src="BBCC/images/칠레감동.gif">
+          <div class="tooltip">칠레감동</div>
+        </li>
+      
+        <li class="orimg" data-tags="칠레콘,움짤">
+          <img data-keyword="칠레점프" src="BBCC/images/칠레점프.gif">
+          <div class="tooltip">칠레점프</div>
+        </li>
+      
+        <li class="orimg" data-tags="칠레콘,움짤">
+          <img data-keyword="칠레스고이" src="BBCC/images/칠레스고이.gif">
+          <div class="tooltip">칠레스고이</div>
+        </li>
+      
+        <li class="orimg" data-tags="칠레콘,움짤">
+          <img data-keyword="칠레감탄" src="BBCC/images/칠레감탄1.gif">
+          <div class="tooltip">칠레감탄
+칠레감탄1</div>
+        </li>
+      
+        <li class="orimg" data-tags="칠레콘,움짤">
+          <img data-keyword="칠레감탄2" src="BBCC/images/칠레감탄2.gif">
+          <div class="tooltip">칠레감탄2</div>
+        </li>
+      
+        <li class="orimg" data-tags="칠레콘,움짤">
+          <img data-keyword="칠레감탄3" src="BBCC/images/칠레감탄3.gif">
+          <div class="tooltip">칠레감탄3</div>
+        </li>
+      
+        <li class="orimg" data-tags="칠레콘,움짤">
+          <img data-keyword="칠레감탄4" src="BBCC/images/칠레감탄4.gif">
+          <div class="tooltip">칠레감탄4</div>
+        </li>
+      
+        <li class="orimg" data-tags="개구리">
+          <img data-keyword="개구리빵야1" src="BBCC/images/개구리빵야1.png">
+          <div class="tooltip">개구리빵야1</div>
+        </li>
+      
+        <li class="orimg" data-tags="개구리">
+          <img data-keyword="개구리빵야2" src="BBCC/images/개구리빵야2.png">
+          <div class="tooltip">개구리빵야2</div>
+        </li>
+      
+        <li class="orimg" data-tags="개구리">
+          <img data-keyword="개구리화남" src="BBCC/images/개구리화남.png">
+          <div class="tooltip">개구리화남</div>
+        </li>
+      
+        <li class="orimg" data-tags="개구리,움짤">
+          <img data-keyword="갑분싸" src="BBCC/images/개구리갑분싸.gif">
+          <div class="tooltip">갑분싸
+개구리갑분싸</div>
+        </li>
+      
+        <li class="orimg" data-tags="한자,국뽕">
+          <img data-keyword="비선실" src="BBCC/images/한자비선실세.png">
+          <div class="tooltip">비선실</div>
+        </li>
+      
+        <li class="orimg" data-tags="한자">
+          <img data-keyword="사이버망령" src="BBCC/images/한자사이버.png">
+          <div class="tooltip">사이버망령</div>
+        </li>
+      
+        <li class="orimg" data-tags="한자">
+          <img data-keyword="혼모노" src="BBCC/images/한자혼모노.png">
+          <div class="tooltip">혼모노</div>
+        </li>
+      
+        <li class="orimg" data-tags="">
+          <img data-keyword="구레이" src="BBCC/images/기타구레이.png">
+          <div class="tooltip">구레이
+구레이다옹</div>
+        </li>
+      
+        <li class="orimg" data-tags="">
+          <img data-keyword="네온" src="BBCC/images/기타네온.png">
+          <div class="tooltip">네온
+네온다옹</div>
+        </li>
+      
+        <li class="orimg" data-tags="">
+          <img data-keyword="죽창" src="BBCC/images/기타죽창.png">
+          <div class="tooltip">죽창</div>
+        </li>
+      
+        <li class="orimg" data-tags="유다이">
+          <img data-keyword="유다희" src="BBCC/images/기타유다희1.png">
+          <div class="tooltip">유다희
+유다이
+유다희1
+유다이1</div>
+        </li>
+      
+        <li class="orimg" data-tags="유다이">
+          <img data-keyword="유다희2" src="BBCC/images/기타유다희2.png">
+          <div class="tooltip">유다희2
+유다이2</div>
+        </li>
+      
+        <li class="orimg" data-tags="유다이">
+          <img data-keyword="유다희3" src="BBCC/images/기타유다희3.png">
+          <div class="tooltip">유다희3
+유다이3
+사망</div>
+        </li>
+      
+        <li class="orimg" data-tags="유다이">
+          <img data-keyword="파킨" src="BBCC/images/기타파킨.gif">
+          <div class="tooltip">파킨</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="개소리" src="BBCC/images/기타개소리.gif">
+          <div class="tooltip">개소리
+개소리집어쳐</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="버퍼링" src="BBCC/images/기타버퍼링.gif">
+          <div class="tooltip">버퍼링</div>
+        </li>
+      
+        <li class="orimg" data-tags="">
+          <img data-keyword="형이왜" src="BBCC/images/기타형이왜.png">
+          <div class="tooltip">형이왜
+형이왜거기서</div>
+        </li>
+      
+        <li class="orimg" data-tags="고인물">
+          <img data-keyword="토끼공듀" src="BBCC/images/기타토끼공듀1.png">
+          <div class="tooltip">토끼공듀
+개노잼
+토끼공듀1</div>
+        </li>
+      
+        <li class="orimg" data-tags="고인물">
+          <img data-keyword="망겜이다" src="BBCC/images/기타토끼공듀2.png">
+          <div class="tooltip">망겜이다
+토끼공듀2</div>
+        </li>
+      
+        <li class="orimg" data-tags="게비스콘">
+          <img data-keyword="불편" src="BBCC/images/기타불편.png">
+          <div class="tooltip">불편</div>
+        </li>
+      
+        <li class="orimg" data-tags="게비스콘">
+          <img data-keyword="편안" src="BBCC/images/기타편안.png">
+          <div class="tooltip">편안</div>
+        </li>
+      
+        <li class="orimg" data-tags="">
+          <img data-keyword="가능" src="BBCC/images/기타가능.png">
+          <div class="tooltip">가능</div>
+        </li>
+      
+        <li class="orimg" data-tags="희키콘,움짤">
+          <img data-keyword="희키눈물" src="BBCC/images/희키눈물.gif">
+          <div class="tooltip">희키눈물
+눈물희키</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="녹색옷" src="BBCC/images/젤다녹색옷.png">
+          <div class="tooltip">녹색옷
+초록옷</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="젤다기도" src="BBCC/images/젤다기도.png">
+          <div class="tooltip">젤다기도
+링크기도</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="젤다던져" src="BBCC/images/젤다던져.png">
+          <div class="tooltip">젤다던져
+링크던져</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="젤다득템" src="BBCC/images/젤다득템.png">
+          <div class="tooltip">젤다득템
+링크득템</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="젤다따봉" src="BBCC/images/젤다따봉.png">
+          <div class="tooltip">젤다따봉
+링크따봉</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="젤다여기야" src="BBCC/images/젤다여기야.png">
+          <div class="tooltip">젤다여기야
+링크여기야</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="젤다응원" src="BBCC/images/젤다응원.png">
+          <div class="tooltip">젤다응원
+링크응원</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="젤다절규" src="BBCC/images/젤다절규.png">
+          <div class="tooltip">젤다절규
+링크절규</div>
+        </li>
+      
+        <li class="orimg" data-tags="젤다">
+          <img data-keyword="젤다티배깅" src="BBCC/images/젤다티배깅.png">
+          <div class="tooltip">젤다티배깅
+링크티배깅</div>
+        </li>
+      
+        <li class="orimg" data-tags="굳건이">
+          <img data-keyword="굳건이" src="BBCC/images/굳건따봉.png">
+          <div class="tooltip">굳건이
+굳건따봉</div>
+        </li>
+      
+        <li class="orimg" data-tags="굳건이">
+          <img data-keyword="굳건트레일" src="BBCC/images/굳건트레일.png">
+          <div class="tooltip">굳건트레일</div>
+        </li>
+      
+        <li class="orimg" data-tags="굳건이,참피">
+          <img data-keyword="굳건참피" src="BBCC/images/굳건참피.png">
+          <div class="tooltip">굳건참피</div>
+        </li>
+      
+        <li class="orimg" data-tags="참피">
+          <img data-keyword="붕쯔" src="BBCC/images/참피붕쯔.png">
+          <div class="tooltip">붕쯔
+붕쯔붕쯔</div>
+        </li>
+      
+        <li class="orimg" data-tags="참피">
+          <img data-keyword="쿠이" src="BBCC/images/참피쿠이.png">
+          <div class="tooltip">쿠이
+쿠이쿠이</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵드럼" src="BBCC/images/우리핵드럼.gif">
+          <div class="tooltip">우리핵드럼</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵박수" src="BBCC/images/우리핵박수1.gif">
+          <div class="tooltip">우리핵박수
+우리핵박수1</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵박수2" src="BBCC/images/우리핵박수2.gif">
+          <div class="tooltip">우리핵박수2</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵박수3" src="BBCC/images/우리핵박수3.gif">
+          <div class="tooltip">우리핵박수3</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵빵야" src="BBCC/images/우리핵빵야.gif">
+          <div class="tooltip">우리핵빵야</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵쌍안경" src="BBCC/images/우리핵쌍안경.gif">
+          <div class="tooltip">우리핵쌍안경</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵아닌데" src="BBCC/images/우리핵아닌데.gif">
+          <div class="tooltip">우리핵아닌데</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵안녕" src="BBCC/images/우리핵안녕.gif">
+          <div class="tooltip">우리핵안녕</div>
+        </li>
+      
+        <li class="orimg" data-tags="우리핵콘,움짤">
+          <img data-keyword="우리핵투정" src="BBCC/images/우리핵투정.gif">
+          <div class="tooltip">우리핵투정</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘">
+          <img data-keyword="그안키" src="BBCC/images/레바그안키.png">
+          <div class="tooltip">그안키
+안키우는데요</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘">
+          <img data-keyword="레바띠용" src="BBCC/images/레바띠용.png">
+          <div class="tooltip">레바띠용</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘">
+          <img data-keyword="설명들갑" src="BBCC/images/레바설명.png">
+          <div class="tooltip">설명들갑</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘">
+          <img data-keyword="에라모겠" src="BBCC/images/레바에라.png">
+          <div class="tooltip">에라모겠
+에라몰겠</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘">
+          <img data-keyword="레바와아" src="BBCC/images/레바와아.png">
+          <div class="tooltip">레바와아</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘">
+          <img data-keyword="이제좀볼만" src="BBCC/images/레바이제좀.png">
+          <div class="tooltip">이제좀볼만</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘,움짤">
+          <img data-keyword="레바탕탕" src="BBCC/images/레바탕탕.gif">
+          <div class="tooltip">레바탕탕</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘">
+          <img data-keyword="레바팝콘" src="BBCC/images/레바팝콘1.png">
+          <div class="tooltip">레바팝콘
+레바팝콘1
+팝콘레바2</div>
+        </li>
+      
+        <li class="orimg" data-tags="레바콘">
+          <img data-keyword="팝콘레바" src="BBCC/images/레바팝콘2.png">
+          <div class="tooltip">팝콘레바
+팝콘레바1
+레바팝콘2</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕">
+          <img data-keyword="김치워리어" src="BBCC/images/국뽕김치워리어.png">
+          <div class="tooltip">김치워리어</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕,국기">
+          <img data-keyword="무궁화1" src="BBCC/images/국뽕무궁화1.png">
+          <div class="tooltip">무궁화1
+무궁화</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕,국기">
+          <img data-keyword="무궁화2" src="BBCC/images/국뽕무궁화2.png">
+          <div class="tooltip">무궁화2</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕">
+          <img data-keyword="세종대왕" src="BBCC/images/국뽕세종대왕.png">
+          <div class="tooltip">세종대왕</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕">
+          <img data-keyword="세종분노" src="BBCC/images/국뽕세종분노.png">
+          <div class="tooltip">세종분노</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕,국기">
+          <img data-keyword="태극기" src="BBCC/images/국뽕태극기.png">
+          <div class="tooltip">태극기</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕,국기">
+          <img data-keyword="펄럭1" src="BBCC/images/국뽕펄럭1.gif">
+          <div class="tooltip">펄럭1
+펄럭</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕,국기,움짤">
+          <img data-keyword="펄럭2" src="BBCC/images/국뽕펄럭2.gif">
+          <div class="tooltip">펄럭2</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕,국기">
+          <img data-keyword="찢장기" src="BBCC/images/국뽕찢장기.gif">
+          <div class="tooltip">찢장기</div>
+        </li>
+      
+        <li class="orimg" data-tags="국뽕,국기">
+          <img data-keyword="찢조국" src="BBCC/images/국뽕찢조국.gif">
+          <div class="tooltip">찢조국</div>
+        </li>
+      
+        <li class="orimg" data-tags="국기">
+          <img data-keyword="킹조국" src="BBCC/images/기타천조국.gif">
+          <div class="tooltip">킹조국</div>
+        </li>
+      
+        <li class="orimg" data-tags="국기">
+          <img data-keyword="리전락" src="BBCC/images/기타리전락.gif">
+          <div class="tooltip">리전락</div>
+        </li>
+      
+        <li class="orimg" data-tags="좋은말콘,움짤">
+          <img data-keyword="좋겠다" src="BBCC/images/좋은말좋겠다.gif">
+          <div class="tooltip">좋겠다</div>
+        </li>
+      
+        <li class="orimg" data-tags="좋은말콘,움짤">
+          <img data-keyword="네말이맞아" src="BBCC/images/좋은말네말맞.gif">
+          <div class="tooltip">네말이맞아
+네말맞</div>
+        </li>
+      
+        <li class="orimg" data-tags="좋은말콘,움짤">
+          <img data-keyword="짱이야" src="BBCC/images/좋은말짱이야.gif">
+          <div class="tooltip">짱이야</div>
+        </li>
+      
+        <li class="orimg" data-tags="좋은말콘,움짤">
+          <img data-keyword="정말멋있다" src="BBCC/images/좋은말멋있다.gif">
+          <div class="tooltip">정말멋있다</div>
+        </li>
+      
+        <li class="orimg" data-tags="좋은말콘,움짤">
+          <img data-keyword="축하해" src="BBCC/images/좋은말축하해.gif">
+          <div class="tooltip">축하해</div>
+        </li>
+      
+        <li class="orimg" data-tags="캐피탈리즘호">
+          <img data-keyword="노예일해" src="BBCC/images/캐피탈노예일해.png">
+          <div class="tooltip">노예일해
+일해</div>
+        </li>
+      
+        <li class="orimg" data-tags="캐피탈리즘호">
+          <img data-keyword="퍄산" src="BBCC/images/캐피탈퍄산.png">
+          <div class="tooltip">퍄산
+파산</div>
+        </li>
+      
+        <li class="orimg" data-tags="캐피탈리즘호">
+          <img data-keyword="폴짝" src="BBCC/images/캐피탈폴짝.png">
+          <div class="tooltip">폴짝</div>
+        </li>
+      
+        <li class="orimg" data-tags="캐피탈리즘호">
+          <img data-keyword="이지붐" src="BBCC/images/캐피탈이지붐.jpg">
+          <div class="tooltip">이지붐</div>
+        </li>
+      
+        <li class="orimg" data-tags="붓싼문학">
+          <img data-keyword="우리가남이가" src="BBCC/images/붓싼남이가1.png">
+          <div class="tooltip">우리가남이가
+우리가남이가1</div>
+        </li>
+      
+        <li class="orimg" data-tags="붓싼문학">
+          <img data-keyword="우리가남이가2" src="BBCC/images/붓싼남이가2.png">
+          <div class="tooltip">우리가남이가2</div>
+        </li>
+      
+        <li class="orimg" data-tags="붓싼문학">
+          <img data-keyword="갸아악" src="BBCC/images/붓싼갸아악1.png">
+          <div class="tooltip">갸아악
+갸아악1</div>
+        </li>
+      
+        <li class="orimg" data-tags="붓싼문학">
+          <img data-keyword="갸아악2" src="BBCC/images/붓싼갸아악2.png">
+          <div class="tooltip">갸아악2</div>
+        </li>
+      
+        <li class="orimg" data-tags="붓싼문학">
+          <img data-keyword="구와아악" src="BBCC/images/붓싼구와아악.png">
+          <div class="tooltip">구와아악</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="문풍당당1" src="BBCC/images/문풍당당1.gif">
+          <div class="tooltip">문풍당당1
+문풍당당</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="문풍당당2" src="BBCC/images/문풍당당2.gif">
+          <div class="tooltip">문풍당당2</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="문풍당당3" src="BBCC/images/문풍당당3.gif">
+          <div class="tooltip">문풍당당3</div>
+        </li>
+      
+        <li class="orimg" data-tags="코지마">
+          <img data-keyword="코지마" src="BBCC/images/코지마.png">
+          <div class="tooltip">코지마</div>
+        </li>
+      
+        <li class="orimg" data-tags="토드콘,코지마">
+          <img data-keyword="토지마" src="BBCC/images/토드코지마.png">
+          <div class="tooltip">토지마</div>
+        </li>
+      
+        <li class="orimg" data-tags="토드콘">
+          <img data-keyword="토드흐뭇" src="BBCC/images/토드흐뭇.png">
+          <div class="tooltip">토드흐뭇</div>
+        </li>
+      
+        <li class="orimg" data-tags="토드콘">
+          <img data-keyword="토드불만" src="BBCC/images/토드불만.png">
+          <div class="tooltip">토드불만</div>
+        </li>
+      
+        <li class="orimg" data-tags="토드콘">
+          <img data-keyword="토드분노" src="BBCC/images/토드분노.png">
+          <div class="tooltip">토드분노</div>
+        </li>
+      
+        <li class="orimg" data-tags="토드콘">
+          <img data-keyword="토드짜잔" src="BBCC/images/토드짜잔.png">
+          <div class="tooltip">토드짜잔</div>
+        </li>
+      
+        <li class="orimg" data-tags="짜잔콘">
+          <img data-keyword="짜잔" src="BBCC/images/제프짜잔.gif">
+          <div class="tooltip">짜잔
+짜잔1</div>
+        </li>
+      
+        <li class="orimg" data-tags="짜잔콘">
+          <img data-keyword="잔짜잔" src="BBCC/images/제프잔짜잔.gif">
+          <div class="tooltip">잔짜잔
+잔짜잔1</div>
+        </li>
+      
+        <li class="orimg" data-tags="짜잔콘">
+          <img data-keyword="짜잔2" src="BBCC/images/제프짜잔.png">
+          <div class="tooltip">짜잔2</div>
+        </li>
+      
+        <li class="orimg" data-tags="짜잔콘">
+          <img data-keyword="잔짜잔2" src="BBCC/images/제프잔짜잔.png">
+          <div class="tooltip">잔짜잔2</div>
+        </li>
+      
+        <li class="orimg" data-tags="BB콘,움짤">
+          <img data-keyword="버그" src="BBCC/images/벤브버그.gif">
+          <div class="tooltip">버그
+대부분</div>
+        </li>
+      
+        <li class="orimg" data-tags="BB콘,움짤">
+          <img data-keyword="꼬우면" src="BBCC/images/벤브꼬우면.gif">
+          <div class="tooltip">꼬우면</div>
+        </li>
+      
+        <li class="orimg" data-tags="BB콘,움짤">
+          <img data-keyword="리틀성기" src="BBCC/images/벤브리틀.gif">
+          <div class="tooltip">리틀성기</div>
+        </li>
+      
+        <li class="orimg" data-tags="BB콘,움짤">
+          <img data-keyword="의도된" src="BBCC/images/벤브의도.gif">
+          <div class="tooltip">의도된</div>
+        </li>
+      
+        <li class="orimg" data-tags="BB콘,움짤">
+          <img data-keyword="어케이김" src="BBCC/images/벤브어케1.gif">
+          <div class="tooltip">어케이김
+어케이겼노</div>
+        </li>
+      
+        <li class="orimg" data-tags="BB콘,움짤">
+          <img data-keyword="어케함" src="BBCC/images/벤브어케2.gif">
+          <div class="tooltip">어케함
+어케했노</div>
+        </li>
+      
+        <li class="orimg" data-tags="핫산">
+          <img data-keyword="핫산발상" src="BBCC/images/핫산발상.png">
+          <div class="tooltip">핫산발상</div>
+        </li>
+      
+        <li class="orimg" data-tags="핫산">
+          <img data-keyword="핫산쾅" src="BBCC/images/핫산쾅.png">
+          <div class="tooltip">핫산쾅</div>
+        </li>
+      
+        <li class="orimg" data-tags="핫산">
+          <img data-keyword="핫산펑" src="BBCC/images/핫산펑.png">
+          <div class="tooltip">핫산펑</div>
+        </li>
+      
+        <li class="orimg" data-tags="컴갤콘">
+          <img data-keyword="암드" src="BBCC/images/AMD.png">
+          <div class="tooltip">암드
+AMD
+amd</div>
+        </li>
+      
+        <li class="orimg" data-tags="컴갤콘">
+          <img data-keyword="라이젠" src="BBCC/images/RYZEN.png">
+          <div class="tooltip">라이젠
+RYZEN
+ryzen</div>
+        </li>
+      
+        <li class="orimg" data-tags="컴갤콘">
+          <img data-keyword="인텔" src="BBCC/images/INTEL.png">
+          <div class="tooltip">인텔
+INTEL
+intel</div>
+        </li>
+      
+        <li class="orimg" data-tags="컴갤콘">
+          <img data-keyword="도코모" src="BBCC/images/DOCOMO.png">
+          <div class="tooltip">도코모
+DOCOMO
+docomo</div>
+        </li>
+      
+        <li class="orimg" data-tags="컴갤콘">
+          <img data-keyword="엘지" src="BBCC/images/LG.png">
+          <div class="tooltip">엘지
+엘쥐
+LG
+lg</div>
+        </li>
+      
+        <li class="orimg" data-tags="김두한">
+          <img data-keyword="4딸라" src="BBCC/images/야인시대4딸라.png">
+          <div class="tooltip">4딸라</div>
+        </li>
+      
+        <li class="orimg" data-tags="김두한">
+          <img data-keyword="오케이땡큐" src="BBCC/images/야인시대오케이.png">
+          <div class="tooltip">오케이땡큐</div>
+        </li>
+      
+        <li class="orimg" data-tags="겐고로">
+          <img data-keyword="아아" src="BBCC/images/겐고로아아.png">
+          <div class="tooltip">아아</div>
+        </li>
+      
+        <li class="orimg" data-tags="겐고로">
+          <img data-keyword="마치" src="BBCC/images/겐고로마치.png">
+          <div class="tooltip">마치</div>
+        </li>
+      
+        <li class="orimg" data-tags="">
+          <img data-keyword="게이븐" src="BBCC/images/기타게이븐.png">
+          <div class="tooltip">게이븐</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="유비" src="BBCC/images/기타유비.gif">
+          <div class="tooltip">유비
+윾비</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="댕댕콘" src="BBCC/images/기타댕댕.gif">
+          <div class="tooltip">댕댕콘</div>
+        </li>
+      
+        <li class="orimg" data-tags="">
+          <img data-keyword="매우정상" src="BBCC/images/기타매우정상.png">
+          <div class="tooltip">매우정상</div>
+        </li>
+      
+        <li class="orimg" data-tags="">
+          <img data-keyword="상담필요" src="BBCC/images/기타상담필요.png">
+          <div class="tooltip">상담필요</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="네다틀" src="BBCC/images/기타네다틀.gif">
+          <div class="tooltip">네다틀</div>
+        </li>
+      
+        <li class="orimg" data-tags="움짤">
+          <img data-keyword="무지개깃발" src="BBCC/images/기타무지개깃발.gif">
+          <div class="tooltip">무지개깃발</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물너클즈" src="BBCC/images/눈물너클즈.png">
+          <div class="tooltip">눈물너클즈</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물소닉" src="BBCC/images/눈물소닉.png">
+          <div class="tooltip">눈물소닉</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물에이미" src="BBCC/images/눈물에이미.png">
+          <div class="tooltip">눈물에이미</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물테일즈" src="BBCC/images/눈물테일즈.png">
+          <div class="tooltip">눈물테일즈</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물겐지" src="BBCC/images/눈물겐지.png">
+          <div class="tooltip">눈물겐지</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물디바" src="BBCC/images/눈물디바.png">
+          <div class="tooltip">눈물디바</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물라인" src="BBCC/images/눈물라인.png">
+          <div class="tooltip">눈물라인
+눈물라인하르트</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물로드" src="BBCC/images/눈물로드.png">
+          <div class="tooltip">눈물로드
+눈물로드호그</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물루시우" src="BBCC/images/눈물루시우.png">
+          <div class="tooltip">눈물루시우</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물리퍼" src="BBCC/images/눈물리퍼.png">
+          <div class="tooltip">눈물리퍼</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물맥크리" src="BBCC/images/눈물맥크리.png">
+          <div class="tooltip">눈물맥크리</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물메르시" src="BBCC/images/눈물메르시.png">
+          <div class="tooltip">눈물메르시</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물메이" src="BBCC/images/눈물메이.png">
+          <div class="tooltip">눈물메이</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물바스" src="BBCC/images/눈물바스.png">
+          <div class="tooltip">눈물바스
+눈물바스티온</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물솔져" src="BBCC/images/눈물솔져.png">
+          <div class="tooltip">눈물솔져</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물시메" src="BBCC/images/눈물시메.png">
+          <div class="tooltip">눈물시메
+눈물시메트라</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물위도우" src="BBCC/images/눈물위도우.png">
+          <div class="tooltip">눈물위도우
+눈물위도우메이커</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물윈스턴" src="BBCC/images/눈물윈스턴.png">
+          <div class="tooltip">눈물윈스턴</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물자리야" src="BBCC/images/눈물자리야.png">
+          <div class="tooltip">눈물자리야</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물정크랫" src="BBCC/images/눈물정크랫.png">
+          <div class="tooltip">눈물정크랫</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물젠야타" src="BBCC/images/눈물젠야타.png">
+          <div class="tooltip">눈물젠야타</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물토르" src="BBCC/images/눈물토르.png">
+          <div class="tooltip">눈물토르
+눈물토르비욘</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물트레" src="BBCC/images/눈물트레.png">
+          <div class="tooltip">눈물트레
+눈물트레이서</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물파라" src="BBCC/images/눈물파라.png">
+          <div class="tooltip">눈물파라</div>
+        </li>
+      
+        <li class="orimg" data-tags="눈물콘">
+          <img data-keyword="눈물한조" src="BBCC/images/눈물한조.png">
+          <div class="tooltip">눈물한조</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타,움짤">
+          <img data-keyword="빨갱이" src="BBCC/images/손님빨갱이.gif">
+          <div class="tooltip">빨갱이
+화남</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="멀미" src="BBCC/images/손님멀미1.gif">
+          <div class="tooltip">멀미
+멀미1</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타,움짤">
+          <img data-keyword="멀미2" src="BBCC/images/손님멀미2.gif">
+          <div class="tooltip">멀미2</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타,움짤">
+          <img data-keyword="멀미3" src="BBCC/images/손님멀미3.gif">
+          <div class="tooltip">멀미3</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="피곤" src="BBCC/images/손님피곤.gif">
+          <div class="tooltip">피곤</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="행복" src="BBCC/images/손님행복1.gif">
+          <div class="tooltip">행복
+행복1</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="행복2" src="BBCC/images/손님행복2.gif">
+          <div class="tooltip">행복2</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="무표정" src="BBCC/images/손님무표정.gif">
+          <div class="tooltip">무표정</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="불행" src="BBCC/images/손님불행1.gif">
+          <div class="tooltip">불행
+불행1</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="불행2" src="BBCC/images/손님불행2.gif">
+          <div class="tooltip">불행2</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="수직낙하" src="BBCC/images/롤코수직낙하.png">
+          <div class="tooltip">수직낙하</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="하트라인" src="BBCC/images/롤코하트라인.gif">
+          <div class="tooltip">하트라인</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="촉수가게" src="BBCC/images/롤코촉수.png">
+          <div class="tooltip">촉수가게</div>
+        </li>
+      
+        <li class="orimg" data-tags="롤코타">
+          <img data-keyword="화장실" src="BBCC/images/롤코화장실.png">
+          <div class="tooltip">화장실</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="공중제비" src="BBCC/images/볼트공중제비.gif">
+          <div class="tooltip">공중제비
+볼트공중제비</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트넷여친" src="BBCC/images/볼트넷여친.png">
+          <div class="tooltip">볼트넷여친</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트넷친구" src="BBCC/images/볼트넷친구.png">
+          <div class="tooltip">볼트넷친구</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트동정" src="BBCC/images/볼트동정.png">
+          <div class="tooltip">볼트동정</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트가정사" src="BBCC/images/볼트가정사.png">
+          <div class="tooltip">볼트가정사</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트등골" src="BBCC/images/볼트등골.png">
+          <div class="tooltip">볼트등골</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트병신" src="BBCC/images/볼트병신.png">
+          <div class="tooltip">볼트병신</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트나무" src="BBCC/images/볼트나무.png">
+          <div class="tooltip">볼트나무</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트대머리" src="BBCC/images/볼트대머리.png">
+          <div class="tooltip">볼트대머리
+볼트머머리
+볼트대대리
+볼트머대리</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트침대" src="BBCC/images/볼트침대.png">
+          <div class="tooltip">볼트침대</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트활활" src="BBCC/images/볼트활활.png">
+          <div class="tooltip">볼트활활</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트댕댕" src="BBCC/images/볼트댕댕.png">
+          <div class="tooltip">볼트댕댕</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트기계" src="BBCC/images/볼트기계.png">
+          <div class="tooltip">볼트기계</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트결혼" src="BBCC/images/볼트결혼.png">
+          <div class="tooltip">볼트결혼</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트비밀친구" src="BBCC/images/볼트비밀친구.png">
+          <div class="tooltip">볼트비밀친구</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트군인" src="BBCC/images/볼트군인.png">
+          <div class="tooltip">볼트군인</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트닌자" src="BBCC/images/볼트닌자.png">
+          <div class="tooltip">볼트닌자
+볼트대게</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트인육" src="BBCC/images/볼트인육.png">
+          <div class="tooltip">볼트인육</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트핫산" src="BBCC/images/볼트핫산.png">
+          <div class="tooltip">볼트핫산</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트주사" src="BBCC/images/볼트주사.png">
+          <div class="tooltip">볼트주사</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트빼액" src="BBCC/images/볼트빼액.png">
+          <div class="tooltip">볼트빼액</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트꺼져" src="BBCC/images/볼트꺼져.png">
+          <div class="tooltip">볼트꺼져</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트닥쳐" src="BBCC/images/볼트닥쳐.png">
+          <div class="tooltip">볼트닥쳐</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트안마" src="BBCC/images/볼트안마.png">
+          <div class="tooltip">볼트안마</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트망치" src="BBCC/images/볼트망치.png">
+          <div class="tooltip">볼트망치</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트빠따" src="BBCC/images/볼트빠따.png">
+          <div class="tooltip">볼트빠따</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트수류탄" src="BBCC/images/볼트수류탄.png">
+          <div class="tooltip">볼트수류탄</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트전기톱" src="BBCC/images/볼트전기톱.png">
+          <div class="tooltip">볼트전기톱</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트장전" src="BBCC/images/볼트장전.png">
+          <div class="tooltip">볼트장전</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트저격" src="BBCC/images/볼트저격.png">
+          <div class="tooltip">볼트저격</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트라이플" src="BBCC/images/볼트라이플.png">
+          <div class="tooltip">볼트라이플</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트화염병" src="BBCC/images/볼트화염병.png">
+          <div class="tooltip">볼트화염병</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트주먹" src="BBCC/images/볼트주먹.png">
+          <div class="tooltip">볼트주먹</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트컴온" src="BBCC/images/볼트컴온.png">
+          <div class="tooltip">볼트컴온</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트투창" src="BBCC/images/볼트투창.png">
+          <div class="tooltip">볼트투창</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트아킴보" src="BBCC/images/볼트아킴보.png">
+          <div class="tooltip">볼트아킴보</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트고인" src="BBCC/images/볼트고인.png">
+          <div class="tooltip">볼트고인</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트부활" src="BBCC/images/볼트부활.png">
+          <div class="tooltip">볼트부활</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트띠용" src="BBCC/images/볼트띠용.png">
+          <div class="tooltip">볼트띠용</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트신문" src="BBCC/images/볼트신문.png">
+          <div class="tooltip">볼트신문</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트눈물" src="BBCC/images/볼트눈물.png">
+          <div class="tooltip">볼트눈물</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트투시" src="BBCC/images/볼트투시.png">
+          <div class="tooltip">볼트투시</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트토끼" src="BBCC/images/볼트토끼.png">
+          <div class="tooltip">볼트토끼</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트포기" src="BBCC/images/볼트포기.png">
+          <div class="tooltip">볼트포기</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트자살" src="BBCC/images/볼트자살.png">
+          <div class="tooltip">볼트자살</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트에쎔" src="BBCC/images/볼트에쎔.png">
+          <div class="tooltip">볼트에쎔</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트딸딸" src="BBCC/images/볼트딸딸.png">
+          <div class="tooltip">볼트딸딸</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트음주" src="BBCC/images/볼트음주.png">
+          <div class="tooltip">볼트음주</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트수면" src="BBCC/images/볼트수면.png">
+          <div class="tooltip">볼트수면</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트우승" src="BBCC/images/볼트우승.png">
+          <div class="tooltip">볼트우승</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트루저" src="BBCC/images/볼트루저.png">
+          <div class="tooltip">볼트루저</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트구토" src="BBCC/images/볼트구토.png">
+          <div class="tooltip">볼트구토</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트예수" src="BBCC/images/볼트예수.png">
+          <div class="tooltip">볼트예수</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트심리" src="BBCC/images/볼트심리.png">
+          <div class="tooltip">볼트심리</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트연설" src="BBCC/images/볼트연설.png">
+          <div class="tooltip">볼트연설</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트공중" src="BBCC/images/볼트공중.png">
+          <div class="tooltip">볼트공중</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트엄격" src="BBCC/images/볼트엄격.png">
+          <div class="tooltip">볼트엄격</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트진지" src="BBCC/images/볼트진지.png">
+          <div class="tooltip">볼트진지</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트근엄" src="BBCC/images/볼트근엄.png">
+          <div class="tooltip">볼트근엄</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트펄럭" src="BBCC/images/볼트펄럭.png">
+          <div class="tooltip">볼트펄럭</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트답답" src="BBCC/images/볼트답답.png">
+          <div class="tooltip">볼트답답</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트절망" src="BBCC/images/볼트절망.png">
+          <div class="tooltip">볼트절망</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트관전" src="BBCC/images/볼트관전.png">
+          <div class="tooltip">볼트관전</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트통수" src="BBCC/images/볼트통수.png">
+          <div class="tooltip">볼트통수</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트연주" src="BBCC/images/볼트연주.png">
+          <div class="tooltip">볼트연주</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트파오후" src="BBCC/images/볼트파오후.png">
+          <div class="tooltip">볼트파오후</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트딴딴" src="BBCC/images/볼트딴딴.png">
+          <div class="tooltip">볼트딴딴</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트처형" src="BBCC/images/볼트처형.png">
+          <div class="tooltip">볼트처형</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트명상" src="BBCC/images/볼트명상.png">
+          <div class="tooltip">볼트명상</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트마약" src="BBCC/images/볼트마약.png">
+          <div class="tooltip">볼트마약</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트떠남" src="BBCC/images/볼트떠남.png">
+          <div class="tooltip">볼트떠남</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트근육" src="BBCC/images/볼트근육.png">
+          <div class="tooltip">볼트근육</div>
+        </li>
+      
+        <li class="orimg" data-tags="볼트보이콘">
+          <img data-keyword="볼트자본" src="BBCC/images/볼트자본.png">
+          <div class="tooltip">볼트자본</div>
+        </li>
+      </ul>
+
+      <footer>
+        Powered by <a href="https://gitlab.com">GitLab</a><br>
+        Original page designed by <a href="https://lastorder.xyz">Lastorder</a><br>
+        Redesigned by <a href="https://twitch.mr/mr_watert">Mr.WaterT</a>
+      </footer>
+    </article>
+
+
+
+    <script src="https://krynen.github.io/hangul-jamo-js/hangul-jamo.js"></script>
+    <script>// 메서드를 정의
+function copy(text) {
+  var input = document.createElement("input");
+  input.type = "text";
+  input.value = `~${text}`;
+  document.body.appendChild(input);
+  input.select();
+
+  if (document.execCommand("copy") === false) {
+    prompt("복사에 실패했습니다. 직접 복사해 사용해주세요.", `~${text}`);
+  }
+  document.body.removeChild(input);
+}
+
+function addBubble(text) {
+  var bubble = document.createElement("div");
+  bubble.classList.add("bubble");
+  bubble.innerText = text;
+  document.body.appendChild(bubble);
+  setTimeout(()=>{ document.body.removeChild(bubble); }, 2000);
+}
+
+// #orimgs에 클릭 이벤트를 추가
+document.getElementById("orimgs").onclick = function(evt) {
+  var keyword = evt.target.getAttribute("data-keyword");
+  if (keyword === null) { return; }
+
+  copy(keyword);
+  var jongseong = keyword.charCodeAt(keyword.length-1) % 28 !== 16;
+  if (Number(keyword[keyword.length-1]) != NaN) {
+    switch(Number(keyword[keyword.length-1])) {
+      case 1: case 3: case 6: case 7: case 8: case 0:
+        jongseong = true;
+        break;
+
+      case 2: case 4: case 5: case 9:
+        jsongseong = false;
+        break;
+
+      default:
+        break;
+    }
+  }
+  addBubble(`${keyword}${jongseong?"을":"를"} 클립보드에 복사했습니다.`);
+};</script>
+    <script>function registerEvents(input, list, filter) {
+  var timeout = null;
+  var event = function() { 
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      Array.from(list).forEach( (el) => { filter(input.value, el); } );
+    }, 300);
+  };
+  input.addEventListener("keyup", event);
+}
+function activateInput(input, list) {
+  var timeout = null;
+  input.addEventListener("focus", () => {
+    clearTimeout(timeout);
+    list.classList.remove("hidden");
+  } );
+  input.addEventListener("blur", () => {
+    timeout = setTimeout(() => { list.classList.add("hidden"); }, 300);
+  } );
+  list.addEventListener("click", (evt) => {
+    input.value = evt.target.innerText;
+
+    if (typeof Event === "function") {
+      input.dispatchEvent(new Event("keyup"));
+    } else {
+      var event = document.createEvent("Event");
+      event.initEvent("keyup", true, true);
+      input.dispatchEvent(event);
+    }
+  } );
+  input.removeAttribute("disabled");
+}
+
+(() => {
+  var input = document.getElementById("search-name").querySelector("input");
+
+  var filterOrimgs = function(value, el) {
+    var tooltip = HANGUL.toJamos(el.querySelector(".tooltip").innerText);
+    var index = tooltip.indexOf(HANGUL.toJamos(value));
+    if (index === -1) { el.classList.add("hidden"); }
+    else { el.classList.remove("hidden"); }
+  };
+  registerEvents(
+    input,
+    document.getElementById("orimgs").getElementsByClassName("orimg"),
+    filterOrimgs
+  );
+
+  var filterNames = function(value, el) {
+    var name = HANGUL.toJamos(el.innerText);
+    var index = name.indexOf(HANGUL.toJamos(value));
+    if (index === -1) { el.classList.add("hidden"); }
+    else {
+      if (index === 0) { el.style.order = 1; }
+      else { el.style.order = 2; }
+      el.classList.remove("hidden");
+    }
+  };
+  registerEvents(
+    input,
+    document.getElementById("names").getElementsByClassName("name"),
+    filterNames
+  );
+
+  activateInput(input, document.getElementById("names"));
+})();
+</script>
+    <script>(() => {
+  var input = document.getElementById("search-tag").querySelector("input");
+
+  var filterOrimgs = function(value, el) {
+    var tags = el.getAttribute("data-tags");
+    var index = tags.split(",").some( (tag) => {
+      return HANGUL.toJamos(tag).indexOf(HANGUL.toJamos(value)) !== -1;
+    } );
+    if (index) { el.classList.remove("hidden"); }
+    else { el.classList.add("hidden"); }
+  };
+  registerEvents(
+    input,
+    document.getElementById("orimgs").getElementsByClassName("orimg"),
+    filterOrimgs
+  );
+
+  var filterTags = function(value, el) {
+    var tag = HANGUL.toJamos(el.innerText);
+    var index = tag.indexOf(HANGUL.toJamos(value));
+    if (index === -1) { el.classList.add("hidden"); }
+    else {
+      if (index === 0) { el.style.order = 1; }
+      else { el.style.order = 2; }
+      el.classList.remove("hidden");
+    }
+  };
+  registerEvents(
+    input,
+    document.getElementById("tags").getElementsByClassName("tag"),
+    filterTags
+  );
+
+  activateInput(input, document.getElementById("tags"));
+})();
+</script>
+  </body>
+</html>
